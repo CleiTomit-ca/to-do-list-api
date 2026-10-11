@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+
+    CONSTRAINT uk_user_email UNIQUE (email)
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    completed BOOLEAN NOT NULL,
+    user_id BIGINT NOT NULL,
+    
+    CONSTRAINT fk_task_user FOREIGN KEY (user_id)
+    REFERENCES users (id) ON DELETE CASCADE
+);
