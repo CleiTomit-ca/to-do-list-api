@@ -15,6 +15,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "password_hash", ignore = true)
     User toEntity(UserRequestDTO requestDTO);
 
     UserResponseDTO toResponseDTO(User user);
