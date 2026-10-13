@@ -38,4 +38,11 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @PrePersist
+    public void prePersist(){
+        if(this.completed == null){
+            this.completed = false;
+        }
+    }
 }
