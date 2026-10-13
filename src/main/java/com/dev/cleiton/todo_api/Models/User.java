@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.dev.cleiton.todo_api.Exceptions.TaskNotFoundException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,7 +59,7 @@ public class User {
 
     public void AddTask(Task task) throws Exception {
         if(task == null){
-            throw new Exception("A tarefa não encontrada.");
+            throw new TaskNotFoundException("A tarefa não encontrada.");
         }
 
         tasks.add(task);
@@ -65,7 +67,7 @@ public class User {
 
     public void RemoveTask(Task task) throws Exception{
         if(task == null){
-            throw new Exception("A tarefa não encontrada.");
+            throw new TaskNotFoundException("A tarefa não encontrada.");
         }
 
         tasks.remove(task);
