@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.dev.cleiton.todo_api.Exceptions.TaskNotFoundException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,4 +51,25 @@ public class User {
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private final List<Task> tasks = new ArrayList<>();
+
+    @PrePersist 
+    public void prePersist(){
+        createdAt = LocalDateTime.now();
+    }
+
+    public void AddTask(Task task) throws Exception {
+        if(task == null){
+            throw new TaskNotFoundException("A tarefa não encontrada.");
+        }
+
+        tasks.add(task);
+    }
+
+    public void RemoveTask(Task task) throws Exception{
+        if(task == null){
+            throw new TaskNotFoundException("A tarefa não encontrada.");
+        }
+
+        tasks.remove(task);
+    }
 }
