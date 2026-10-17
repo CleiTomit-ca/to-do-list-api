@@ -8,9 +8,11 @@ import com.dev.cleiton.todo_api.dto.request.UserRequestDTO;
 import com.dev.cleiton.todo_api.dto.response.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +38,17 @@ public class UserService {
         log.info("Usuários listados com sucesso.");
 
         return userMapper.toListDTO(users);
+    }
+
+    public Page<UserResponseDTO> listAllUsersPageable(Pageable pageable){
+
+        log.info("Listado usuários encontrados com paginação");
+
+        Page<User> users = userRepository.findAll(pageable);
+
+        log.info("Usuários com paginação listada com sucesso.");
+
+        return users.map(userMapper::toResponseDTO);
     }
 
     @Transactional(readOnly = true)
