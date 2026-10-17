@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import com.dev.cleiton.todo_api.Models.User;
@@ -23,4 +24,9 @@ public interface UserMapper {
     UserResponseDTO toResponseDTO(User user);
 
     List<UserResponseDTO> toListDTO(List<User> user);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "password_hash", ignore = true)
+    void updateEntity(UserRequestDTO userRequestDTO, @MappingTarget User user);
 }
