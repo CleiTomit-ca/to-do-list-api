@@ -26,7 +26,7 @@ public class TaskService {
 
     private Task findOrFail(Long id) throws TaskNotFoundException {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task não encontrada."));
+                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada."));
     }
 
     @Transactional(readOnly = true)
@@ -61,6 +61,18 @@ public class TaskService {
         Task task = findOrFail(id);
 
         log.info("Tarefa encontrada com sucesso: {}.", task.getId());
+
+        return taskMapper.taskResponseDTO(task);
+    }
+
+    public TaskResponseDTO findTaskByTitle(String title) throws TaskNotFoundException {
+
+        log.info("Buscando tarefa com Titulo: {}", title);
+
+        Task task = taskRepository.findByTitle(title)
+                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada."));
+
+        log.info("Tarefa com titulo encontrada com sucesso: {}.", task.getId());
 
         return taskMapper.taskResponseDTO(task);
     }

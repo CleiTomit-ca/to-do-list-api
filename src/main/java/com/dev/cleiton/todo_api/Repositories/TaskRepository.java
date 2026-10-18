@@ -10,7 +10,6 @@ import com.dev.cleiton.todo_api.Models.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Long>{
 
-    Page<Task> findAllPageable(Pageable pageable);
-
     Optional<Task> findByTitle(String title);
+
 }
